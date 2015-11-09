@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate, UITextFieldDelegate {
+    UINavigationControllerDelegate {
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
     
@@ -24,6 +24,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     var mainScreenSize : CGSize = UIScreen.mainScreen().bounds.size // Getting main screen size
+    
+    var memeFieldsDelegate : MemeFieldsDelegate? = nil
     
     let memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
@@ -47,49 +49,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
         topTextField.textAlignment = .Center
         bottomTextField.textAlignment = .Center
         
-        topTextField.delegate = self
-        bottomTextField.delegate = self
-        
-        topTextField.delegate = self
-        bottomTextField.delegate = self
+        memeFieldsDelegate = MemeFieldsDelegate(topField: topTextField, bottomField: bottomTextField)
         
         shareButton.enabled = false
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.subscribeToKeyboardNotifications()
-        self.subscribeToKeyboardWillHideNotification()
+        subscribeToKeyboardNotifications()
+        subscribeToKeyboardWillHideNotification()
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.unsubscribeFromKeyboardNotifications()
-        self.unsubscribeFromKeyboardWillHideNotification()
-
+        unsubscribeFromKeyboardNotifications()
+        unsubscribeFromKeyboardWillHideNotification()
     }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-
-        //clear out the text field
-        if topTextField == textField {
-            topTextField.text = ""
-        }
-        else {
-            bottomTextField.text = ""
-        }
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
         
-        return true
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -166,7 +146,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
         
         pickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         
-        self.presentViewController(pickerController, animated: true, completion: nil)
+        presentViewController(pickerController, animated: true, completion: nil)
     }
     
     @IBAction func pictureFromCamera(sender: AnyObject) {
@@ -177,7 +157,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
             
             imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
             
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            presentViewController(imagePicker, animated: true, completion: nil)
         }
         else{
             print("camera not available")
@@ -188,18 +168,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         
         if let image = image as? UIImage {
-            self.imagePickerView.image = image
+            imagePickerView.image = image
             topTextField.hidden = false
             bottomTextField.hidden = false
             shareButton.enabled = true
         }
     
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         //user canceled
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func shareButtonClicked(sender: UIBarButtonItem) {
@@ -223,21 +203,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     
     @IBAction func cancelButtonClicked(sender: UIBarButtonItem) {
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let editMeme = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-        self.presentViewController(editMeme, animated: true, completion: nil)
+        presentViewController(editMeme, animated: true, completion: nil)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
-        picker .dismissViewControllerAnimated(true, completion: nil)
+        picker.dismissViewControllerAnimated(true, completion: nil)
         //imagePickerView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         let imageObj:UIImage! = info[UIImagePickerControllerOriginalImage] as? UIImage
 
-        imagePickerView.image = self.imageResize(imageObj , sizeChange: mainScreenSize)
+        imagePickerView.image = imageResize(imageObj , sizeChange: mainScreenSize)
         
         topTextField.hidden = false
         bottomTextField.hidden = false
@@ -249,8 +229,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     
     func imageResize (imageObj:UIImage, sizeChange:CGSize)-> UIImage{
         
-        print("scaling image")
-        
         let hasAlpha = false
         let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
         
@@ -259,15 +237,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
         
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         return scaledImage
-    }
-    
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-
-        let newString = textField.text!.uppercaseString
-        
-        textField.text = newString
-        
-        return true
     }
     
 }
