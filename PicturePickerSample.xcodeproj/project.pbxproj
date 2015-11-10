@@ -16,6 +16,8 @@
 		CFB4EE841BB7402B000AD4E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFB4EE821BB7402B000AD4E2 /* LaunchScreen.storyboard */; };
 		CFB4EE8F1BB7402B000AD4E2 /* PicturePickerSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB4EE8E1BB7402B000AD4E2 /* PicturePickerSampleTests.swift */; };
 		CFB4EE9A1BB7402B000AD4E2 /* PicturePickerSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB4EE991BB7402B000AD4E2 /* PicturePickerSampleUITests.swift */; };
+		CFD977541BF12D1D00DA314F /* MemeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD977531BF12D1D00DA314F /* MemeTableViewController.swift */; };
+		CFD977561BF12D2B00DA314F /* MemeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD977551BF12D2B00DA314F /* MemeCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		CFB4EE951BB7402B000AD4E2 /* PicturePickerSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PicturePickerSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFB4EE991BB7402B000AD4E2 /* PicturePickerSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturePickerSampleUITests.swift; sourceTree = "<group>"; };
 		CFB4EE9B1BB7402B000AD4E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CFD977531BF12D1D00DA314F /* MemeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeTableViewController.swift; sourceTree = "<group>"; };
+		CFD977551BF12D2B00DA314F /* MemeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,8 @@
 				CFB4EE851BB7402B000AD4E2 /* Info.plist */,
 				CFB3E6EF1BC07DAC00E4387D /* Meme.swift */,
 				CF2128BC1BF0DFA200A0A640 /* MemeFieldsDelegate.swift */,
+				CFD977531BF12D1D00DA314F /* MemeTableViewController.swift */,
+				CFD977551BF12D2B00DA314F /* MemeCollectionViewController.swift */,
 			);
 			path = PicturePickerSample;
 			sourceTree = "<group>";
@@ -265,6 +271,8 @@
 				CFB3E6F01BC07DAC00E4387D /* Meme.swift in Sources */,
 				CF2128BD1BF0DFA200A0A640 /* MemeFieldsDelegate.swift in Sources */,
 				CFB4EE7C1BB7402B000AD4E2 /* ViewController.swift in Sources */,
+				CFD977541BF12D1D00DA314F /* MemeTableViewController.swift in Sources */,
+				CFD977561BF12D2B00DA314F /* MemeCollectionViewController.swift in Sources */,
 				CFB4EE7A1BB7402B000AD4E2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

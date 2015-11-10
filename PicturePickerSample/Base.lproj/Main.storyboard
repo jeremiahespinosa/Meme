@@ -32,7 +32,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="vtt-dk-Jlf"/>
-                                    <barButtonItem title="Camera" id="nIb-go-Q2i">
+                                    <barButtonItem systemItem="camera" id="nIb-go-Q2i">
                                         <connections>
                                             <action selector="pictureFromCamera:" destination="BYZ-38-t0r" id="RET-cm-4xV"/>
                                         </connections>
