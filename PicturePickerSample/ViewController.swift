@@ -216,17 +216,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
         disableAndHideFields()
         
         dismissViewControllerAnimated(true, completion: nil)
-        
-        //avoiding creating a new instance of storyboard
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let editMeme = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-//        presentViewController(editMeme, animated: true, completion: nil)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         picker.dismissViewControllerAnimated(true, completion: nil)
-        //imagePickerView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         let imageObj:UIImage! = info[UIImagePickerControllerOriginalImage] as? UIImage
 
