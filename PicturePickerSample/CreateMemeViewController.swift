@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate,
+class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegate,
     UINavigationControllerDelegate {
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -17,7 +17,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var bottomTextField: UITextField!
     
-    @IBOutlet weak var topToolBar: UIToolbar!
+  @IBOutlet weak var navigationBar: UINavigationBar!
+    //@IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var bottomToolBar: UIToolbar!
     
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -26,28 +27,44 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     var mainScreenSize : CGSize = UIScreen.mainScreen().bounds.size // Getting main screen size
     
     var memeFieldsDelegate : MemeFieldsDelegate? = nil
-    
-    let memeTextAttributes = [
-        NSStrokeColorAttributeName : UIColor.blackColor(),
-        NSForegroundColorAttributeName : UIColor.whiteColor(),
-        NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSStrokeWidthAttributeName : -2.0
-    ]
+  
+  var memes: [Meme] {
+    return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+  }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        
+      
+      applyTextFieldAttributes(topTextField)
+      applyTextFieldAttributes(bottomTextField)
+
         disableAndHideFields()
         
         topTextField.textAlignment = .Center
         bottomTextField.textAlignment = .Center
         
         memeFieldsDelegate = MemeFieldsDelegate(topField: topTextField, bottomField: bottomTextField)
+      
+      if memes.count < 1{
+         cancelButton.enabled = false
+      }else {
+        cancelButton.enabled = true
+      }
+      
     }
-    
+  
+  func applyTextFieldAttributes(textField: UITextField){
+    let memeTextAttributes = [
+      NSStrokeColorAttributeName : UIColor.blackColor(),
+      NSForegroundColorAttributeName :  UIColor.whiteColor(),
+      NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+      NSStrokeWidthAttributeName : -7.0
+    ]
+    textField.defaultTextAttributes     = memeTextAttributes
+    textField.textAlignment             = NSTextAlignment.Center
+    textField.autocapitalizationType    = UITextAutocapitalizationType.AllCharacters
+  }
+  
     override func viewWillAppear(animated: Bool) {
         subscribeToKeyboardNotifications()
         subscribeToKeyboardWillHideNotification()
@@ -109,14 +126,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text! , originalImage: imagePickerView.image!, memedImage: generateMemedImage())
         
         //add meme to memes array on Application Delegate
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as! AppDelegate
-//        appDelegate.memes.append(meme)
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
     }
     
     func generateMemedImage() -> UIImage {
         
-        topToolBar?.hidden = true
+        navigationBar?.hidden = true
         bottomToolBar?.hidden = true
         
         // Render view to an image
@@ -130,8 +147,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
         
         UIGraphicsEndImageContext()
         
-        topToolBar?.hidden = false
-        topToolBar?.hidden = false
+        navigationBar?.hidden = false
+        navigationBar?.hidden = false
         
         return memedImage
     }
@@ -165,6 +182,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         
         if let image = image as? UIImage {
+            imagePickerView.contentMode  = UIViewContentMode.ScaleAspectFit
             imagePickerView.image = image
             topTextField.hidden = false
             bottomTextField.hidden = false
@@ -201,13 +219,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     func disableAndHideFields(){
         imagePickerView.image = nil
         
-        topTextField.text = "Top"
-        bottomTextField.text = "Bottom"
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
         
         topTextField.hidden = true
         bottomTextField.hidden = true
         
-        cancelButton.enabled = false
+//        cancelButton.enabled = false
         shareButton.enabled = false
     }
     
@@ -220,20 +238,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate,
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        
-        let imageObj:UIImage! = info[UIImagePickerControllerOriginalImage] as? UIImage
-
-        imagePickerView.image = imageResize(imageObj , sizeChange: mainScreenSize)
-        
-        topTextField.hidden = false
-        bottomTextField.hidden = false
-        
-        shareButton.enabled = true
-        
-        cancelButton.enabled = true
+//        picker.dismissViewControllerAnimated(true, completion: nil)
+//        
+//        let imageObj:UIImage! = info[UIImagePickerControllerOriginalImage] as? UIImage
+//
+//        imagePickerView.image = imageResize(imageObj , sizeChange: mainScreenSize)
+//        
+      topTextField.hidden = false
+      bottomTextField.hidden = false
+      
+      shareButton.enabled = true
+      if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+        self.imagePickerView.contentMode  = UIViewContentMode.ScaleAspectFit
+        self.imagePickerView.image        = image
+      }
+      picker.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+  
     func imageResize (imageObj:UIImage, sizeChange:CGSize)-> UIImage{
         
         let hasAlpha = false
