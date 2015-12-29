@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/jeremiahespinosa/Meme.svg?branch=master)](https://travis-ci.org/jeremiahespinosa/Meme)
 ##App Specification: MemeMe 2.0, The Final Product
   iOS Developer Nanodegree
   
