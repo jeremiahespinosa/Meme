@@ -24,8 +24,9 @@ The three pages are described in detail below.
 ##User Flow
   When the user presses the share button, Apple’s stock Activity View appears, displaying several options for sharing the meme. After an option is chosen, the Activity View is dismissed and the Sent Memes View appears. The Sent Memes View also appears upon pressing the “Cancel” button. Selecting a meme from the table or collection presents the Meme Detail View. Clicking on the back arrow of the Meme Detail View presents the previous Sent Memes View, either the table or collection.
 
-<img src="screenshots/screen1_MemeMe.png" width="25%" />
-<img src="screenshots/screen2_MemeMe.png" width="25%" />
-<img src="screenshots/screen3_MemeMe.png" width="25%" />
-<img src="screenshots/screen4_MemeMe.png" width="25%" />
-<img src="screenshots/MemeDetailView.png" width="25%" />
+
+<img src="MemeMeScreenshots/screen1_MemeMe.png" width="25%" />
+<img src="MemeMeScreenshots/screen2_MemeMe.png" width="25%" />
+<img src="MemeMeScreenshots/screen3_MemeMe.png" width="25%" />
+<img src="MemeMeScreenshots/screen4_MemeMe.png" width="25%" />
+<img src="MemeMeScreenshots/MemeDetailView.png" width="25%" />
